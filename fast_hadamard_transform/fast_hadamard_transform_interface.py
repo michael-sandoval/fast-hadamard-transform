@@ -10,7 +10,7 @@ import torch
 import torch.nn.functional as F
 
 
-import fast_hadamard_transform_cuda
+import fast_hadamard_transform_hip
 
 
 class HadamardTransformFn(torch.autograd.Function):
@@ -18,13 +18,13 @@ class HadamardTransformFn(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, scale=1.0):
         ctx._hadamard_transform_scale = scale
-        return fast_hadamard_transform_cuda.fast_hadamard_transform(x, scale)
+        return fast_hadamard_transform_hip.fast_hadamard_transform(x, scale)
 
     @staticmethod
     def backward(ctx, dout):
         # The Hadamard transform matrix is symmetric, so in the backward pass we multiply by its
         # transpose, which is itself.
-        return fast_hadamard_transform_cuda.fast_hadamard_transform(dout, ctx._hadamard_transform_scale), None
+        return fast_hadamard_transform_hip.fast_hadamard_transform(dout, ctx._hadamard_transform_scale), None
 
 
 def hadamard_transform(x, scale=1.0):
@@ -47,13 +47,13 @@ class HadamardTransform12NFn(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, scale=1.0):
         ctx._hadamard_transform_scale = scale
-        return fast_hadamard_transform_cuda.fast_hadamard_transform_12N(x, scale)
+        return fast_hadamard_transform_hip.fast_hadamard_transform_12N(x, scale)
 
     @staticmethod
     def backward(ctx, dout):
         # The Hadamard transform matrix is symmetric, so in the backward pass we multiply by its
         # transpose, which is itself.
-        return fast_hadamard_transform_cuda.fast_hadamard_transform_12N(dout, ctx._hadamard_transform_scale), None
+        return fast_hadamard_transform_hip.fast_hadamard_transform_12N(dout, ctx._hadamard_transform_scale), None
     
 
 def hadamard_transform_12N(x, scale=1.0):
@@ -76,13 +76,13 @@ class HadamardTransform20NFn(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, scale=1.0):
         ctx._hadamard_transform_scale = scale
-        return fast_hadamard_transform_cuda.fast_hadamard_transform_20N(x, scale)
+        return fast_hadamard_transform_hip.fast_hadamard_transform_20N(x, scale)
 
     @staticmethod
     def backward(ctx, dout):
         # The Hadamard transform matrix is symmetric, so in the backward pass we multiply by its
         # transpose, which is itself.
-        return fast_hadamard_transform_cuda.fast_hadamard_transform_20N(dout, ctx._hadamard_transform_scale), None
+        return fast_hadamard_transform_hip.fast_hadamard_transform_20N(dout, ctx._hadamard_transform_scale), None
 
 
 def hadamard_transform_20N(x, scale=1.0):
@@ -104,13 +104,13 @@ class HadamardTransform28NFn(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, scale=1.0):
         ctx._hadamard_transform_scale = scale
-        return fast_hadamard_transform_cuda.fast_hadamard_transform_28N(x, scale)
+        return fast_hadamard_transform_hip.fast_hadamard_transform_28N(x, scale)
 
     @staticmethod
     def backward(ctx, dout):
         # The Hadamard transform matrix is symmetric, so in the backward pass we multiply by its
         # transpose, which is itself.
-        return fast_hadamard_transform_cuda.fast_hadamard_transform_28N(dout, ctx._hadamard_transform_scale), None
+        return fast_hadamard_transform_hip.fast_hadamard_transform_28N(dout, ctx._hadamard_transform_scale), None
 
 
 def hadamard_transform_28N(x, scale=1.0):
@@ -132,13 +132,13 @@ class HadamardTransform40NFn(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, scale=1.0):
         ctx._hadamard_transform_scale = scale
-        return fast_hadamard_transform_cuda.fast_hadamard_transform_40N(x, scale)
+        return fast_hadamard_transform_hip.fast_hadamard_transform_40N(x, scale)
 
     @staticmethod
     def backward(ctx, dout):
         # The Hadamard transform matrix is symmetric, so in the backward pass we multiply by its
         # transpose, which is itself.
-        return fast_hadamard_transform_cuda.fast_hadamard_transform_40N(dout, ctx._hadamard_transform_scale), None
+        return fast_hadamard_transform_hip.fast_hadamard_transform_40N(dout, ctx._hadamard_transform_scale), None
 
 def hadamard_transform_40N(x, scale=1.0):
     """
